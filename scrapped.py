@@ -16,6 +16,8 @@ import json
 import socket
 import struct
 import time
+import os
+import sys
 import select
 import platform
 import psutil
@@ -1939,8 +1941,20 @@ def youtube_downloader():
         return
 
     print("Downloading...")
-    selected.download(output_path=download_folder)
-    print("Download complete!")
+    try:
+        selected.download(output_path=download_folder)
+        print("Download complete!")
+    except urllib.error.HTTPError as e:
+        print(f"Download failed due to HTTP Error: {e}")
+        print("Attempting to extract direct download URL...")
+        try:
+            url = yt.streams.filter(progressive=True, file_extension="mp4").first().url
+            print(f"Direct download URL: {url}")
+            print("Please use this URL with a download manager to download the video.")
+        except Exception as ex:
+            print(f"Failed to extract direct download URL: {ex}")
+    except Exception as e:
+        print(f"Error during download: {e}")
     input("\nPress Enter to return to the main menu...")
 
 def youtube_downloader_ydl():
