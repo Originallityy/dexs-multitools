@@ -2,6 +2,7 @@
 requests>=2.25.1
 beautifulsoup4>=4.9.3
 tqdm>=4.61.0
+inquirer>=2.7.0
 
 # System monitoring
 psutil>=5.8.0
