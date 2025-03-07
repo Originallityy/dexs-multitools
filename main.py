@@ -6,9 +6,14 @@ import subprocess
 import inquirer
 import time
 
+def printheader(text):
+    print(f"=== {text} ===")
+
 choices = [
     "Web Scraping",
-    "Windows Tweaks"
+    "Windows Tweaks",
+    "YT Downloader",
+    "Exit"
 ]
 windowstweaks = [
     "Compact OS Mode",
@@ -113,8 +118,15 @@ def run(option):
                         subprocess.run([script_path], check=True)
                     except subprocess.CalledProcessError as e:
                         print(f"Error executing VBS script: {e}")
+    else:
+        print("Invalid option.")
     print("Press any key to continue...")
     input()
+
+def clear_screen():
+    """Clear the terminal screen."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 while True: 
     os.system("cls" if os.name == "nt" else "clear")

@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+
+
 puts "=== Script starting ==="
 STDOUT.flush
 
