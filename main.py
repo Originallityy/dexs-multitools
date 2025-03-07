@@ -9,8 +9,14 @@ import time
 def printheader(text):
     print(f"=== {text} ===")
 
+def printheader(text):
+    print(f"=== {text} ===")
+
 choices = [
     "Web Scraping",
+    "Windows Tweaks",
+    "YT Downloader",
+    "Exit"
     "Windows Tweaks",
     "YT Downloader",
     "Exit"

@@ -17,3 +17,4 @@ yt-dlp>=2023.3.4
 ffmpeg-python
 moviepy>=1.0.3
 pytube>=12.1.0
+ffmpeg-python
