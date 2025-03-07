@@ -193,11 +193,13 @@ begin
         rescue => e
           log "  ✗ Could not download resource: #{resource_url}"
           log "    Error: #{e.message}"
+          log "    #{e.backtrace.first(3).join("\n    ")}" if $DEBUG
           failed_downloads += 1
         end
       rescue => e
         log "  ✗ Failed to process resource URL: #{resource_url}"
         log "    Error: #{e.message}"
+        log "    #{e.backtrace.first(3).join("\n    ")}" if $DEBUG
         failed_downloads += 1
       end
     end
@@ -211,16 +213,30 @@ begin
     log "Failed: #{failed_downloads}"
     log "Website scraped and saved to: #{output_dir}"
     
+    # Export summary report to a file
+    File.open(File.join(output_dir, "scrape_summary.txt"), "w") do |file|
+      file.puts "Scraping Summary for #{url}"
+      file.puts "Date: #{Time.now}"
+      file.puts "------------------------------"
+      file.puts "Total resources found: #{resources.length}"
+      file.puts "Successfully downloaded: #{successful_downloads}"
+      file.puts "Skipped: #{skipped_resources}"
+      file.puts "Failed: #{failed_downloads}"
+    end
+    
     # Add a clear completion marker
     log "=== SCRAPING FINISHED SUCCESSFULLY ==="
+    log "Summary report saved to: #{File.join(output_dir, 'scrape_summary.txt')}"
     
     # Exit with successful status code
     exit 0
   else
     log "Error: Could not access the website. HTTP response code: #{response.code}"
+    log "Response body: #{response.body[0..500]}..." if $DEBUG
     exit 1
   end
 rescue => e
   log "Error occurred while scraping: #{e.message}"
+  log "Backtrace: #{e.backtrace.join("\n")}" if $DEBUG
   exit 1
 end

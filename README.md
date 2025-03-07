@@ -1,3 +1,3 @@
 # dexs-multitools
 ## Directions
-Run `pip install -r requirements.txt`,
+Run `pip install -r requirements.txt`.
