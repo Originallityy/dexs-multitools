@@ -6,9 +6,14 @@ import subprocess
 import inquirer
 import time
 
+def printheader(text):
+    print(f"=== {text} ===")
+
 choices = [
     "Web Scraping",
-    "Windows Tweaks"
+    "Windows Tweaks",
+    "YT Downloader",
+    "Exit"
 ]
 windowstweaks = [
     "Compact OS Mode",
@@ -113,6 +118,29 @@ def run(option):
                         subprocess.run([script_path], check=True)
                     except subprocess.CalledProcessError as e:
                         print(f"Error executing VBS script: {e}")
+    elif option == "YT Downloader":
+        printheader("YT Downloader")
+        print("This will download a video from YouTube.")
+        print("(This option will run another python file, in the utils directory.)")
+        url = input("Enter the URL of the video (Use 'exit' to go back.): ")
+        if url == "exit":
+            print("Exiting...")
+            time.sleep(1)
+            return
+        
+        # Create a username to store the files
+        username = "user"  # You can change this or make it configurable
+        
+        print("Running python script with url arguments now...")
+        script_path = os.path.join(os.path.dirname(__file__), "utils", "yt-downloader.py")
+        try:
+            # Pass arguments in the correct order without flags
+            subprocess.run(["python", script_path, url, username], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error executing Python script: {e}")
+
+    else:
+        print("Invalid option.")
     print("Press any key to continue...")
     input()
 
